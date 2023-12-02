@@ -1,36 +1,34 @@
 import 'package:chat_app/constants.dart';
+import 'package:chat_app/controller/user_controller.dart';
 import 'package:chat_app/cubits/chat/chat_cubit.dart';
-import 'package:chat_app/screens/profile_screen.dart';
+import 'package:chat_app/model/user.dart';
+import 'package:chat_app/screens/user_profile_screen.dart';
 import 'package:chat_app/widgets/chat_bubble.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../model/message.dart';
+import '../controller/notification_controller.dart';
 
 class ChatScreen extends StatelessWidget {
-
   static String id = 'ChatScreen';
   TextEditingController controller = TextEditingController();
   final _controller = ScrollController();
-
+  final userModel = UserModel();
 
   @override
   Widget build(BuildContext context) {
-    var email  = ModalRoute.of(context)!.settings.arguments as String;
-    print(email);
+    var email = ModalRoute.of(context)!.settings.arguments as String;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(kLogo,
+            Image.asset(
+              kLogo,
               height: 50,
             ),
-            Text(" Chat App"),
+            const Text(" Chat App"),
           ],
         ),
         toolbarHeight: size.height * 0.10,
@@ -38,7 +36,8 @@ class ChatScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.person),
             onPressed: () {
-              Navigator.pushNamed(context, ProfileScreen.id);   },
+              Navigator.pushNamed(context, ProfileScreen.id);
+            },
             iconSize: 30,
           ),
         ],
@@ -57,11 +56,10 @@ class ChatScreen extends StatelessWidget {
                     controller: _controller,
                     itemCount: messagesList.length,
                     itemBuilder: (context, index) {
-                      return messagesList[index].id == email ?
-                      ChatBubble(
-                          message: messagesList[index])
+                      return messagesList[index].id == email
+                          ? ChatBubble(message: messagesList[index])
                           : ChatBubbleForAnotherUser(
-                          message: messagesList[index]);
+                              message: messagesList[index]);
                     });
               },
             ),
@@ -70,30 +68,37 @@ class ChatScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: TextField(
               controller: controller,
-              onSubmitted: (data) {
+              onSubmitted: (data) async {
                 BlocProvider.of<ChatCubit>(context)
                     .sendMessage(message: data, email: email);
                 controller.clear();
                 _controller.animateTo(
                   0,
-                  duration: Duration(seconds: 1),
+                  duration: const Duration(seconds: 1),
                   curve: Curves.fastOutSlowIn,
                 );
+
+                String? userName = await getUserName(userModel.UserID);
+
+                await getToken((token) {
+                  BlocProvider.of<ChatCubit>(context)
+                      .sendPushMessage(token, data, userName!);
+                });
               },
               decoration: InputDecoration(
                   hintText: 'Send Message',
-                  suffixIcon: Icon(Icons.send,
-                    color: kPrimaryColor,),
+                  suffixIcon: const Icon(
+                    Icons.send,
+                    color: kPrimaryColor,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: kPrimaryColor,
-                      )
-                  )
-              ),
+                      ))),
             ),
           )
         ],

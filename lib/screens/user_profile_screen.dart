@@ -70,9 +70,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 minimumSize: const Size(130, 50),
                 padding: const EdgeInsets.symmetric(horizontal: 16),
               ),
-              child: Row(
+              child: const Row(
                 mainAxisSize: MainAxisSize.min,
-                children: const [
+                children: [
                   Icon(Icons.person, color: Colors.white),
                   SizedBox(width: 8),
                   Text('All Profiles',

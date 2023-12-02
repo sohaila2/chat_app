@@ -7,8 +7,8 @@ import '../model/user.dart';
 import 'edit_user_screen.dart';
 
 class UserSettingsScreen extends StatelessWidget {
-  final UserModel? driverModel;
-  const UserSettingsScreen(this.driverModel, {Key? key}) : super(key: key);
+  final UserModel? userModel;
+  const UserSettingsScreen(this.userModel, {Key? key}) : super(key: key);
 
   static String id = 'UserSettingsScreen';
 
@@ -36,7 +36,7 @@ class UserSettingsScreen extends StatelessWidget {
         ),
         toolbarHeight: size.height * 0.10,
       ),
-      body: driverModel != null
+      body: userModel != null
           ? Container(
         child: Center(
           child: Column(
@@ -57,7 +57,7 @@ class UserSettingsScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => EditUserScreen(driverModel!)),
+                        builder: (context) => EditUserScreen(userModel!)),
                   );
                 },
                 icon: const Icon(Icons.mode_edit_rounded,

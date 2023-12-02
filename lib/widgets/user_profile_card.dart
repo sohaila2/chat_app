@@ -20,10 +20,7 @@ class UserProfileCard extends StatelessWidget {
       padding: EdgeInsets.only(top: size.height * 0.01, bottom: size.height * 0.01),
       child: InkWell(
         splashColor: Colors.transparent,
-        onTap: () {
-          // Navigator.push(context,
-          //     MaterialPageRoute(builder: (context) => RideReport(rideModel: ride)));
-        },
+        onTap: () {},
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(

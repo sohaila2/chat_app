@@ -6,13 +6,18 @@ class UserModel{
   late String email;
   var imageURL;
   late String password;
+  late String token;
 
- UserModel();
+
+
+  UserModel();
 
   UserModel.fromSnapshot(Map<String, dynamic> document) {
     userName = document['userName'] ?? "";
     email = document['email'] ?? "";
     imageURL = document['imageURL'] ?? "";
     password = document['password'] ?? "";
+    token = document['token'] ?? "";
+
   }
 }

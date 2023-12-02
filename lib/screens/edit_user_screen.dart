@@ -1,7 +1,7 @@
 
 import 'dart:io';
 import 'package:chat_app/constants.dart';
-import 'package:chat_app/screens/profile_screen.dart';
+import 'package:chat_app/screens/user_profile_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../controller/user_controller.dart';
@@ -9,8 +9,8 @@ import '../model/user.dart';
 import '../widgets/edit_img_picker.dart';
 
 class EditUserScreen extends StatefulWidget {
-  final UserModel currentDriver;
-  const EditUserScreen(this.currentDriver, {Key? key}) : super(key: key);
+  final UserModel currentUser;
+  const EditUserScreen(this.currentUser, {Key? key}) : super(key: key);
 
   @override
   State<EditUserScreen> createState() => _EditDriverState();
@@ -19,7 +19,7 @@ class EditUserScreen extends StatefulWidget {
 class _EditDriverState extends State<EditUserScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  final UserModel updatedDriver = UserModel();
+  final UserModel updatedUser = UserModel();
 
 
   late TextEditingController _emailController;
@@ -30,11 +30,11 @@ class _EditDriverState extends State<EditUserScreen> {
   void initState() {
     super.initState();
 
-    updatedDriver.email = widget.currentDriver.email;
-    updatedDriver.userName = widget.currentDriver.userName;
+    updatedUser.email = widget.currentUser.email;
+    updatedUser.userName = widget.currentUser.userName;
 
-    _emailController = TextEditingController(text: updatedDriver.email);
-    _userNameController = TextEditingController(text: updatedDriver.userName);
+    _emailController = TextEditingController(text: updatedUser.email);
+    _userNameController = TextEditingController(text: updatedUser.userName);
 
 
   }
@@ -47,7 +47,7 @@ class _EditDriverState extends State<EditUserScreen> {
   }
 
   void _pickedImage(File? pickedImage) {
-    updatedDriver.imageURL = pickedImage;
+    updatedUser.imageURL = pickedImage;
   }
 
   @override
@@ -56,7 +56,7 @@ class _EditDriverState extends State<EditUserScreen> {
 
     return Scaffold(
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           height: size.height,
           child: Form(
             key: _formKey,
@@ -81,7 +81,7 @@ class _EditDriverState extends State<EditUserScreen> {
                       ),
                     ),
                     SizedBox(height: size.height * 0.07),
-                    EditPickImage(_pickedImage, widget.currentDriver.imageURL),
+                    EditPickImage(_pickedImage, widget.currentUser.imageURL),
                     SizedBox(height: size.height * 0.04),
                     // Email TextField
                     Container(
@@ -111,7 +111,7 @@ class _EditDriverState extends State<EditUserScreen> {
                           hintText: "Email",
                         ),
                         onChanged: (email) =>
-                        updatedDriver.email = email.toLowerCase(),
+                        updatedUser.email = email.toLowerCase(),
                       ),
                     ),
                     SizedBox(height: size.height * 0.03),
@@ -141,7 +141,7 @@ class _EditDriverState extends State<EditUserScreen> {
                                 return null;
                               },
                               onChanged: (userName) {
-                                updatedDriver.userName = userName;
+                                updatedUser.userName = userName;
                               },
                               decoration: const InputDecoration.collapsed(
                                   hintText: 'User Name'),
@@ -161,9 +161,9 @@ class _EditDriverState extends State<EditUserScreen> {
                               _formKey.currentState!.save();
 
                               updateUser(
-                                  updatedDriver, widget.currentDriver, context);
+                                  updatedUser, widget.currentUser, context);
                             }
-                        // Navigator.pushNamed(context, ProfileScreen.id, arguments: updatedDriver.UserID);
+                            Navigator.pushNamed(context, ProfileScreen.id);
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,

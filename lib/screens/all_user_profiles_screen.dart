@@ -7,16 +7,11 @@ import 'package:chat_app/widgets/user_profile_card.dart';
 import 'package:flutter/material.dart';
 
 
-class AllProfilesScreen extends StatefulWidget {
+class AllProfilesScreen extends StatelessWidget {
   const AllProfilesScreen({Key? key}) : super(key: key);
 
   static String id = 'AllProfilesScreen';
 
-  @override
-  State<AllProfilesScreen> createState() => _AllRidesState();
-}
-
-class _AllRidesState extends State<AllProfilesScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -70,10 +65,9 @@ class _AllRidesState extends State<AllProfilesScreen> {
 
               if (allProfiles.isEmpty) {
                 // handle empty state
-                // for example
                 return const Center(
                   child: Text(
-                    "You didn't make any rides with us yet.",
+                    "You didn't make any notifications with us yet.",
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Colors.blueGrey,
@@ -82,7 +76,6 @@ class _AllRidesState extends State<AllProfilesScreen> {
                   ),
                 );
               }
-              // rides = [...rides, ...rides, ...rides,...rides, ...rides, ...rides];
               return ListView.builder(
                   itemCount: allProfiles.length,
                   itemBuilder: (context, index) {

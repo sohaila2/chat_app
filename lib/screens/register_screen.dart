@@ -2,7 +2,6 @@ import 'package:chat_app/constants.dart';
 import 'package:chat_app/cubits/register/register_cubit.dart';
 import 'package:chat_app/model/user.dart';
 import 'package:chat_app/screens/chat_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -36,6 +35,7 @@ class RegisterScreen extends StatelessWidget {
         if (state is RegisterLoading) {
           isLoading = true;
         } else if (state is RegisterSuccess) {
+          showSnackBar(context, 'registered successfully');
           BlocProvider.of<ChatCubit>(context).getMessages();
           Navigator.pushNamed(context, ChatScreen.id, arguments: newUser.email);
           isLoading = false;
@@ -60,10 +60,10 @@ class RegisterScreen extends StatelessWidget {
                       "assets/images/chat.png",
                       height: 100,
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           "Welcome to Chat App",
                           style: TextStyle(
                             color: Colors.white,
@@ -73,7 +73,7 @@ class RegisterScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
                     const Row(
                       children: [
                         Text(
@@ -135,7 +135,7 @@ class RegisterScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           " Already have an account ?",
                           style: TextStyle(color: Colors.white),
                         ),
@@ -143,7 +143,7 @@ class RegisterScreen extends StatelessWidget {
                           onTap: () {
                             Navigator.pop(context);
                           },
-                          child: Text(
+                          child: const Text(
                             " Login",
                             style: TextStyle(
                               color: Color(0xffC7EDE6),
@@ -152,7 +152,7 @@ class RegisterScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
                   ],
                 ),
               ),

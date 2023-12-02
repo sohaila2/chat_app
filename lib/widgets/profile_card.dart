@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_app/constants.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../model/user.dart';
@@ -57,7 +56,7 @@ class ProfileCard extends StatelessWidget {
           ],
         ),
         const Divider(),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         Padding(
           padding: const EdgeInsets.all(5.0),
           child: Row(

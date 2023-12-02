@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:chat_app/controller/user_controller.dart';
+import 'package:chat_app/helper/show_snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 
@@ -18,6 +19,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       UserCredential user = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: newUser.email, password: newUser.password);
       await createUser(newUser, FirebaseAuth.instance.currentUser!);
+
       emit(RegisterSuccess());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -26,8 +28,8 @@ class RegisterCubit extends Cubit<RegisterState> {
         emit(RegisterFailure(errMessage: 'email-already-in-use'));
       }
     }
-    catch (e){
-      emit(RegisterFailure(errMessage: 'There was an error please try again'));
+    on Exception  catch (e){
+      emit(RegisterFailure(errMessage: 'There was an error please try again $e'));
     }
   }
 }

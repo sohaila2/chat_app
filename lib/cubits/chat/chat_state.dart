@@ -10,4 +10,5 @@ class ChatSuccess extends ChatState {
 
   ChatSuccess({required this.messagesList});
 }
+class ChatNotification extends ChatState {}
 

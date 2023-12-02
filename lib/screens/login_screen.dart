@@ -5,7 +5,6 @@ import 'package:chat_app/screens/chat_screen.dart';
 import 'package:chat_app/screens/register_screen.dart';
 import 'package:chat_app/widgets/custom_button.dart';
 import 'package:chat_app/widgets/custom_text_field.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -32,6 +31,7 @@ class LoginScreen extends StatelessWidget {
         if (state is LoginLoading) {
           isLoading = true;
         } else if (state is LoginSuccess) {
+          showSnackBar(context, 'Login in successfully');
           BlocProvider.of<ChatCubit>(context).getMessages();
           Navigator.pushNamed(context, ChatScreen.id, arguments: email);
           isLoading = false;
@@ -118,7 +118,7 @@ class LoginScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "Don't have an account ?",
                         style: TextStyle(color: Colors.white),
                       ),
@@ -126,7 +126,7 @@ class LoginScreen extends StatelessWidget {
                         onTap: () {
                           Navigator.pushNamed(context, RegisterScreen.id);
                         },
-                        child: Text(
+                        child: const Text(
                           " Register",
                           style: TextStyle(
                             color: Color(0xffC7EDE6),
